@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.complaints.mapper.ComplaintsMapper">
+    <select id="queryComplaintsList" resultType="Complaints">
+        select * from complaint
+    </select>
+    <select id="queryComplaintsByNumber" resultType="Complaints">
+        select * from complaint where number = #{number}
+    </select>
+    <insert id="addComplaints" parameterType="Complaints">
+        insert into complaint (number,content,complainant,processStatus,user) values (#{number},#{content},#{complainant},#{processStatus},#{user})
+    </insert>
+    <update id="updateComplaints" parameterType="Complaints">
+        update complaint set content=#{content},complainant=#{complainant},processStatus=#{processStatus},user=#{user} where number = #{number}
+    </update>
+    <delete id="deleteComplaints" parameterType="int">
+        delete from complaint where number = #{number}
+    </delete>
+</mapper>

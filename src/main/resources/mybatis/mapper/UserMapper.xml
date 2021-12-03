@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.complaints.mapper.UserMapper">
+    <select id="queryUserList" resultType="User">
+    select * from user
+    </select>
+    <select id="queryUserById" resultType="User">
+        select * from user where id = #{id}
+    </select>
+    <insert id="addUser" parameterType="User">
+        insert into user (id,lastName,password,admin) values (#{id},#{lastName},#{password},#{admin})
+    </insert>
+    <update id="updateUser" parameterType="User">
+        update user set lastName=#{lastName} where id = #{id}
+    </update>
+    <delete id="deleteUser" parameterType="int">
+        delete from user where id = #{id}
+    </delete>
+    <select id="checkAdmin" resultType="User">
+        select * from user where lastName = #{lastName} and password = #{password}
+    </select>
+</mapper>
