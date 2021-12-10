@@ -4,8 +4,10 @@ package com.complaints.controller;
 /*import com.complaints.Dao.ComplaintsDao;
 import com.complaints.Dao.UserDao;*/
 import com.complaints.mapper.ComplaintsMapper;
+import com.complaints.mapper.RecordMapper;
 import com.complaints.mapper.UserMapper;
 import com.complaints.pojo.Complaints;
+import com.complaints.pojo.Record;
 import com.complaints.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -30,6 +32,8 @@ public class  ComplaintsController {
     UserMapper userMapper;
     @Autowired
     JavaMailSenderImpl mailSender;
+    @Autowired
+    RecordMapper recordMapper;
 
     @RequestMapping("/comps")
 
@@ -37,6 +41,13 @@ public class  ComplaintsController {
         Collection<Complaints> complaints1 = /*complaintsDao.getComplaints()*/ complaintsMapper.queryComplaintsList();
         model.addAttribute("complaints",complaints1);
         return "comp/list";
+    }
+
+    @RequestMapping("records")
+    public String recordList(Model model){
+        Collection<Record> record2 = recordMapper.queryRecordList();
+        model.addAttribute("record",record2);
+        return "comp/check";
     }
     @GetMapping("/comp")
     public String toAddpage(Model model){
@@ -50,6 +61,13 @@ public class  ComplaintsController {
 
        // complaintsDao.save(complaint);
         complaintsMapper.addComplaints(complaint);
+        Record record = new Record();
+        record.setNumber(complaint.getNumber());
+        record.setContent(complaint.getContent());
+        record.setComplainant(complaint.getComplainant());
+        record.setProcessStatus(complaint.getProcessStatus());
+        record.setUser(complaint.getUser());
+        recordMapper.addRecord(record);
        return "redirect:/comps";//返回投诉页
     }
     //去到投诉修改页面
@@ -69,6 +87,13 @@ public class  ComplaintsController {
             mailMessage.setTo(complaint.getComplainant());
             mailMessage.setFrom("790214624@qq.com");
             complaintsMapper.updateComplaints(complaint);
+            Record record1 = new Record();
+            record1.setNumber(complaint.getNumber());
+            record1.setContent(complaint.getContent());
+            record1.setComplainant(complaint.getComplainant());
+            record1.setProcessStatus(complaint.getProcessStatus());
+            record1.setUser(complaint.getUser());
+            recordMapper.addRecord(record1);
 
         return "redirect:/comps";
     }
