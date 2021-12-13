@@ -13,4 +13,5 @@ import java.util.List;
 public interface RecordMapper {
     List<Record> queryRecordList();
     int addRecord(Record record);
+    int deleteRecords(int id);
 }

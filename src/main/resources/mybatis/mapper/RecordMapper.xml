@@ -9,4 +9,7 @@
     <insert id="addRecord" parameterType="Record">
         insert into record (number,content,complainant,processStatus,user) values (#{number},#{content},#{complainant},#{processStatus},#{user})
     </insert>
+    <delete id="deleteRecords" parameterType="int">
+        delete from record where number = #{number}
+    </delete>
 </mapper>

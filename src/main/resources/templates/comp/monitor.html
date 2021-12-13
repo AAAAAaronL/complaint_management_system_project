@@ -64,7 +64,7 @@
 									<td th:text="${comp.getNumber()}"></td>
 									<td th:text="${comp.getContent()}"></td>
 									<td th:text="${comp.getComplainant()}"></td>
-									<td th:text="${comp.getProcessStatus()}"></td>
+									<td th:text="${comp.getProcessStatus()==0?'solved':'in progress'}"></td>
 									<td th:text="${comp.getUser()}"></td>
 									<!--<td>
 										<a class="btn btn-sm btn-primary" th:href="@{/comp/}+${comp.getNumber()}">edit</a>

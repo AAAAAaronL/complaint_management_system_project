@@ -33,22 +33,22 @@ public class LoginController {
                         @RequestParam("password") String password,
                         Model model){
        User user = userMapper.checkAdmin(username,password);
-       if (user!=null&&user.getAdmin()==1){
-           return "redirect:/main.html";
+       if (user!=null&&user.getAdmin()==1){//judge the user is administrator or not
+           return "redirect:/main.html";//admin page
        }else if (user!=null&&user.getAdmin()==0){
-           Collection<Complaints> complaints2 = /*complaintsDao.getComplaints()*/ complaintsMapper.queryComplaintsList();
+           Collection<Complaints> complaints2 = complaintsMapper.queryComplaintsList();
            model.addAttribute("complaints",complaints2);
-           return "comp/monitor";
+           return "comp/monitor";//not administrator turn to the normal page
        }else {
-           model.addAttribute("message", "wrong username or password");
+           model.addAttribute("message", "wrong username or password");//wrong password or username tips
            return "login";
        }
     }
     @RequestMapping("/signup")
-    public String addUser(@RequestParam("id") Integer id,
+    public String addUser(@RequestParam("id") Integer id,//sign up method
                           @RequestParam("username") String username,
                           @RequestParam("password") String password){
-        userMapper.addUser(new User(id,username,password,0));
+        userMapper.addUser(new User(id,username,password,0));//add user information into database
 
         return "login";
     }

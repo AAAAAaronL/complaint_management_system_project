@@ -12,17 +12,16 @@ import java.sql.SQLException;
 
 @SpringBootTest
 class ComplaintsApplicationTests {
-/*
    @Autowired
     JavaMailSenderImpl javaMailSender;
    @Test
     void contextLoads() {
 
-       *//* SimpleMailMessage mailMessage = new SimpleMailMessage();
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setSubject("Complaint status has been updated.");
         mailMessage.setText("Thanks for your complaint. Now the problem from your Complaint has been updated.");
         mailMessage.setTo("790214624@qq.com");
-        mailMessage.setFrom("790214624@qq.com");*//*
-    }*/
+        mailMessage.setFrom("790214624@qq.com");
+    }
 
 }

@@ -35,23 +35,22 @@ public class  ComplaintsController {
     @Autowired
     RecordMapper recordMapper;
 
-    @RequestMapping("/comps")
-
+    @RequestMapping("/comps")//link
     public String list(Model model){
-        Collection<Complaints> complaints1 = /*complaintsDao.getComplaints()*/ complaintsMapper.queryComplaintsList();
-        model.addAttribute("complaints",complaints1);
-        return "comp/list";
+        //find all the complaints information
+        Collection<Complaints> complaints1 =  complaintsMapper.queryComplaintsList();//call method and SQL query
+        model.addAttribute("complaints",complaints1);//add attributes into model
+        return "comp/list";//return the web page
     }
 
     @RequestMapping("records")
     public String recordList(Model model){
-        Collection<Record> record2 = recordMapper.queryRecordList();
+        Collection<Record> record2 = recordMapper.queryRecordList();//add all the changes into database
         model.addAttribute("record",record2);
         return "comp/check";
     }
     @GetMapping("/comp")
     public String toAddpage(Model model){
-        //查出所有员工信息
         Collection<User> allusers = userMapper.queryUserList();//userDao.getUsers();
         model.addAttribute("allusers",allusers);
         return "comp/add";
@@ -68,9 +67,9 @@ public class  ComplaintsController {
         record.setProcessStatus(complaint.getProcessStatus());
         record.setUser(complaint.getUser());
         recordMapper.addRecord(record);
-       return "redirect:/comps";//返回投诉页
+       return "redirect:/comps";
     }
-    //去到投诉修改页面
+
     @GetMapping("comp/{number}")
     public String toUpdateComp(@PathVariable("number") Integer number,Model model){
         //查出原来数据
@@ -80,14 +79,14 @@ public class  ComplaintsController {
     }
         @PostMapping("/updateComp")
     public String updateComp(Complaints complaint){
-        //complaintsDao.save(complaint);
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+            SimpleMailMessage mailMessage = new SimpleMailMessage();//send e-mail to complainant
             mailMessage.setSubject("Complaint status has been updated.");
             mailMessage.setText("Thanks for your complaint. Now the problem from your Complaint has been updated.");
             mailMessage.setTo(complaint.getComplainant());
-            mailMessage.setFrom("790214624@qq.com");
+            mailMessage.setFrom("790214624@qq.com");//host e-mail address
             complaintsMapper.updateComplaints(complaint);
-            Record record1 = new Record();
+            Record record1 = new Record();//store change into record table
             record1.setNumber(complaint.getNumber());
             record1.setContent(complaint.getContent());
             record1.setComplainant(complaint.getComplainant());
